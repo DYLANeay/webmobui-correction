@@ -1,8 +1,8 @@
+import { audioPlayer, playSong, currentSong, playNextSong, playPreviousSong } from '../player.js'
+
 customElements.define("page-player", class extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
-      <audio id="audio-player" controls></audio>
-
       <div id="player">
         <div id="player-thumbnail">
           <!-- utiliser l'id de cet élément pour changer la cover de la chanson -->
@@ -53,5 +53,26 @@ customElements.define("page-player", class extends HTMLElement {
         </div>
       </div>
       `
+
+    // On bind proprement le this
+    this.updatePlayerInfos = this.updatePlayerInfos.bind(this)
+    // Dès que le tag audio a chargé une nouvelle chanson, il y a potentiellement eu un
+    // playSong qui a modifié le 'src'. Le tag va alors charger le mp3 et une fois fini,
+    // il va nous avertir du chargement. Hop, mise à jour.
+    audioPlayer.addEventListener('loadeddata', this.updatePlayerInfos)
+    // A la création de la page player, on met également la UI à jour, car il se peut qu'une
+    // chanson soit déjà en lecture en arrière-plan et qu'il faille juste récupérer la valeur
+    // en cours
+    this.updatePlayerInfos()
+  }
+
+  // Se charge de mettre à jour les différentes infos de la plage player, d'après la chanson
+  // en cours
+  updatePlayerInfos() {
+    if (!currentSong) return
+
+    this.querySelector('#player-infos-song-title').innerText = currentSong.title
+    // ...
+    // ...
   }
 })

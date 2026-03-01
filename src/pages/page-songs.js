@@ -1,4 +1,5 @@
-import { getSongs } from '../api.js';
+import { getSongs } from '../api.js'
+import { playSong } from '../player.js'
 
 customElements.define(
 	'page-artist-songs',
@@ -14,20 +15,15 @@ customElements.define(
 
           <div class="list">
           </div>
-        `;
-				const songList = this.querySelector('.list');
-				// Itérer le tableau d'artistes reçus et créer les éléments correspondants
-				songs.forEach((song, index) => {
-					songList.innerHTML += `<song-item title="${song.title}" />`;
-				});
-
-				// Ajouter les listeners sur les boutons play
-				songList.querySelectorAll('.play-button').forEach((button, index) => {
-					button.addEventListener('click', () => {
-						window.location.hash = `#player/${artistId}/${index}`;
-					});
-				});
-			});
-		}
-	},
-);
+        `
+        const songList = this.querySelector('.list')
+        // Itérer le tableau d'artistes reçus et créer les éléments correspondants
+        songs.forEach((song) => {
+          const songItem = document.createElement('song-item')
+          songItem.setAttribute('title', song.title)
+          songItem.addEventListener('click', () => playSong(song, songs))
+          songList.append(songItem)
+        })
+      })
+  }
+})
