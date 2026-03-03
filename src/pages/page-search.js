@@ -1,19 +1,19 @@
-import { getSongs } from '../api.js';
+import { searchSongs } from '../api.js';
 import { playSong } from '../player.js';
 import { toggleFavorite } from '../utils.js';
 
 customElements.define(
-	'page-artist-songs',
+	'page-search-songs',
 	class extends HTMLElement {
 		connectedCallback() {
-			const artistId = this.getAttribute('artist-id');
+			const searchTag = this.getAttribute('search-tag');
 
 			const favorites = [];
 
-			getSongs(artistId).then((songs) => {
+			searchSongs(searchTag).then((songs) => {
 				this.innerHTML = `
           <h4>
-            Artistes > ${songs[0].artist.name}
+            Recherche > ${searchTag}
           </h4>
 
           <div class="list">
@@ -28,6 +28,7 @@ customElements.define(
 				songs.forEach((song) => {
 					const songItem = document.createElement('song-item');
 					songItem.setAttribute('title', song.title);
+				if (song.artist?.name) songItem.setAttribute('artist', song.artist.name);
 					if (favorites.includes(song.id)) {
 						songItem.setAttribute('favorite', 'true');
 					}

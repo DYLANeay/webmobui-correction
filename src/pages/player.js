@@ -34,7 +34,6 @@ const initPlayer = async () => {
 	currentIndex = songIndex;
 	loadSong(currentIndex);
 
-	// Play / Pause
 	document
 		.querySelector('#player-control-play')
 		.addEventListener('click', () => {
@@ -45,7 +44,6 @@ const initPlayer = async () => {
 			}
 		});
 
-	// Changer l'icône play/pause
 	audio.addEventListener('play', () => {
 		document.querySelector('#player-control-play .material-icons').textContent =
 			'pause';
@@ -56,7 +54,6 @@ const initPlayer = async () => {
 			'play_arrow';
 	});
 
-	// Suivant
 	document
 		.querySelector('#player-control-next')
 		.addEventListener('click', () => {
@@ -64,7 +61,6 @@ const initPlayer = async () => {
 			loadSong(currentIndex);
 		});
 
-	// Précédent
 	document
 		.querySelector('#player-control-previous')
 		.addEventListener('click', () => {
@@ -72,7 +68,6 @@ const initPlayer = async () => {
 			loadSong(currentIndex);
 		});
 
-	// Mise à jour du temps et de la barre de progression
 	audio.addEventListener('timeupdate', () => {
 		document.querySelector('#player-time-current').textContent =
 			formatTimestamp(audio.currentTime);
@@ -87,14 +82,12 @@ const initPlayer = async () => {
 		document.querySelector('#player-progress-bar').value = 0;
 	});
 
-	// Barre de progression cliquable
 	document
 		.querySelector('#player-progress-bar')
 		.addEventListener('input', (e) => {
 			audio.currentTime = (e.target.value / 100) * audio.duration;
 		});
 
-	// Chanson suivante automatiquement à la fin
 	audio.addEventListener('ended', () => {
 		currentIndex = (currentIndex + 1) % songs.length;
 		loadSong(currentIndex);

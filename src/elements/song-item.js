@@ -3,7 +3,7 @@ customElements.define(
 	class extends HTMLElement {
 		// Définit la liste des attributs qui seront observés et donc appelerons attributeChangedCallback
 		// lorsqu'il y a une modification
-		static observedAttributes = ['favorite', 'href', 'title'];
+		static observedAttributes = ['favorite', 'href', 'title', 'artist'];
 
 		// Appelé lorsque que l'on insert l'élément dans le DOM, typiquement au moment de:
 		// songList.appendChild(newElement)
@@ -28,8 +28,11 @@ customElements.define(
 					: 'favorite_border';
 
 			// On agglomère le HTML
-			this.innerHTML = `
-      <div class="list-item-title">${this.getAttribute('title')}</div>
+			const artist = this.getAttribute('artist');
+		this.innerHTML = `
+      <div class="list-item-title">
+        ${this.getAttribute('title')}${artist ? `<span class="list-item-artist"> — ${artist}</span>` : ''}
+      </div>
       <div class="list-item-actions">
         <button type="button" class="icon-button favorite-button ">
           <span class="material-icons">${icon}</span>

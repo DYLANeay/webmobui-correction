@@ -1,8 +1,16 @@
-import { audioPlayer, playSong, currentSong, playNextSong, playPreviousSong } from '../player.js'
+import {
+	audioPlayer,
+	currentSong,
+	playNextSong,
+	playPreviousSong,
+} from '../player.js';
+import formatTimestamp from '../lib/formatTimestamp.js';
 
-customElements.define("page-player", class extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `
+customElements.define(
+	'page-player',
+	class extends HTMLElement {
+		connectedCallback() {
+			this.innerHTML = `
       <div id="player">
         <div id="player-thumbnail">
           <!-- utiliser l'id de cet élément pour changer la cover de la chanson -->
@@ -52,27 +60,110 @@ customElements.define("page-player", class extends HTMLElement {
           </div>
         </div>
       </div>
-      `
+      `;
 
-    // On bind proprement le this
-    this.updatePlayerInfos = this.updatePlayerInfos.bind(this)
-    // Dès que le tag audio a chargé une nouvelle chanson, il y a potentiellement eu un
-    // playSong qui a modifié le 'src'. Le tag va alors charger le mp3 et une fois fini,
-    // il va nous avertir du chargement. Hop, mise à jour.
-    audioPlayer.addEventListener('loadeddata', this.updatePlayerInfos)
-    // A la création de la page player, on met également la UI à jour, car il se peut qu'une
-    // chanson soit déjà en lecture en arrière-plan et qu'il faille juste récupérer la valeur
-    // en cours
-    this.updatePlayerInfos()
-  }
+			// On bind proprement le this
+			this.updatePlayerInfos = this.updatePlayerInfos.bind(this);
+			// Dès que le tag audio a chargé une nouvelle chanson, il y a potentiellement eu un
+			// playSong qui a modifié le 'src'. Le tag va alors charger le mp3 et une fois fini,
+			// il va nous avertir du chargement. Hop, mise à jour.
+			audioPlayer.addEventListener('loadeddata', this.updatePlayerInfos);
+			// A la création de la page player, on met également la UI à jour, car il se peut qu'une
+			// chanson soit déjà en lecture en arrière-plan et qu'il faille juste récupérer la valeur
+			// en cours
+			this.updatePlayerInfos();
 
-  // Se charge de mettre à jour les différentes infos de la plage player, d'après la chanson
-  // en cours
-  updatePlayerInfos() {
-    if (!currentSong) return
+			// Play / Pause
+			this.querySelector('#player-control-play').addEventListener(
+				'click',
+				() => {
+					if (audioPlayer.paused) {
+						audioPlayer.play();
+					} else {
+						audioPlayer.pause();
+					}
+				},
+			);
 
-    this.querySelector('#player-infos-song-title').innerText = currentSong.title
-    // ...
-    // ...
-  }
-})
+			// Changer l'icône play/pause
+			audioPlayer.addEventListener('play', () => {
+				this.querySelector('#player-control-play .material-icons').textContent =
+					'pause';
+			});
+			audioPlayer.addEventListener('pause', () => {
+				this.querySelector('#player-control-play .material-icons').textContent =
+					'play_arrow';
+			});
+
+			// déjà démarré avant que la page player soit créée)
+			if (!audioPlayer.paused) {
+				this.querySelector('#player-control-play .material-icons').textContent =
+					'pause';
+			}
+
+			// Suivant / Précédent
+			this.querySelector('#player-control-next').addEventListener(
+				'click',
+				() => {
+					playNextSong();
+				},
+			);
+			this.querySelector('#player-control-previous').addEventListener(
+				'click',
+				() => {
+					playPreviousSong();
+				},
+			);
+
+			// Mise à jour du temps et de la barre de progression
+			audioPlayer.addEventListener('timeupdate', () => {
+				this.querySelector('#player-time-current').textContent =
+					formatTimestamp(audioPlayer.currentTime);
+				const progress =
+					(audioPlayer.currentTime / audioPlayer.duration) * 100 || 0;
+				this.querySelector('#player-progress-bar').value = progress;
+			});
+
+			audioPlayer.addEventListener('loadedmetadata', () => {
+				this.querySelector('#player-time-duration').textContent =
+					formatTimestamp(audioPlayer.duration);
+
+				this.querySelector('#player-time-duration').textContent =
+					formatTimestamp(audioPlayer.duration);
+				this.querySelector('#player-progress-bar').max = 100;
+				this.querySelector('#player-progress-bar').value = 0;
+			});
+
+			// Barre de progression cliquable
+			this.querySelector('#player-progress-bar').addEventListener(
+				'input',
+				(e) => {
+					audioPlayer.currentTime =
+						(e.target.value / 100) * audioPlayer.duration;
+				},
+			);
+
+			// Chanson suivante automatiquement à la fin
+			audioPlayer.addEventListener('ended', () => {
+				playNextSong();
+			});
+		}
+
+		updatePlayerInfos() {
+			if (!currentSong) return;
+
+			this.querySelector('#player-infos-song-title').innerText =
+				currentSong.title;
+
+			this.querySelector('#player-infos-artist-name').innerText =
+				currentSong.artist.name;
+
+			this.querySelector('#player-thumbnail-image').src =
+				currentSong.artist.image_url;
+
+			this.querySelector('#player-time-duration').textContent = formatTimestamp(
+				audioPlayer.duration,
+			);
+¨		}
+	},
+);
