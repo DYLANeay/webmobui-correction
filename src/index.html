@@ -27,6 +27,14 @@
 		<link rel="manifest" href="/manifest.webmanifest" />
 
 		<!-- OneSignal -->
+		<script>
+			window.OneSignalDeferred = window.OneSignalDeferred || [];
+			OneSignalDeferred.push(async function (OneSignal) {
+				await OneSignal.init({
+					appId: '95f7d00c-31ff-492c-a152-58c78cea3d7f',
+				});
+			});
+		</script>
 		<script
 			src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
 			defer
