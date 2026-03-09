@@ -1,52 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Spotlified</title>
 
-<head>
-  <meta charset="utf-8" />
-  <title>Spotlified</title>
+		<!-- Bloquer le viewport - ici, c'est une app! Pas de zoom. -->
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+		/>
 
-  <!-- Bloquer le viewport - ici, c'est une app! Pas de zoom. -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+		<!-- Fonts google pour les icônes et la police par défaut -->
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Icons"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;700&display=swap"
+		/>
 
-  <!-- Fonts google pour les icônes et la police par défaut -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;700&display=swap" />
+		<!-- Stylesheet principale -->
+		<link rel="stylesheet" href="css/index.css" />
 
-  <!-- Stylesheet principale -->
-  <link rel="stylesheet" href="css/index.css" />
+		<!-- manifest -->
+		<script
+			src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+			defer
+		></script>
+		<!-- Javascript principal -->
+		<!-- ...à quoi sert le defer ? :) -->
+		<script src="index.js" type="module" defer></script>
+	</head>
 
-  <!-- manifest -->
-  <link rel="manifest" href="/manifest.webmanifest" />
+	<body>
+		<header>
+			<!-- ajouter la classe "animated" à #logo pour animer l'icône -->
+			<a id="logo" href="/">
+				<span class="material-icons">graphic_eq</span>
+				Spotlified
+			</a>
 
-  <!-- Javascript principal -->
-  <!-- ...à quoi sert le defer ? :) -->
-  <script src="index.js" type="module" defer></script>
-</head>
+			<search-bar />
+		</header>
 
-<body>
-  <header>
-    <!-- ajouter la classe "animated" à #logo pour animer l'icône -->
-    <a id="logo" href="/">
-      <span class="material-icons">graphic_eq</span>
-      Spotlified
-    </a>
+		<audio id="audio-player"></audio>
 
-    <search-bar />
-  </header>
-
-  <audio id="audio-player"></audio>
-
-  <main>
-  </main>
-  <!-- plus tard --->
-  <!-- <section id="lyrics-section" style="display:none">
+		<main></main>
+		<!-- plus tard --->
+		<!-- <section id="lyrics-section" style="display:none">
     <h4>Never going home</h4>
     <h5>Kungs</h5>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis elit maximus, consequat velit vitae, laoreet
       felis. Morbi commodo vitae dolor nec scelerisque. Maecenas non urna orci.</p>
   </section> -->
 
-  <spot-footer></spot-footer>
-</body>
-
+		<spot-footer></spot-footer>
+	</body>
 </html>
