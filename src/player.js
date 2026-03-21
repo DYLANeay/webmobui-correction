@@ -41,4 +41,6 @@ const playPreviousSong = () => {
   playSong(currentSongList[newIndex])
 }
 
+audioPlayer.addEventListener('ended', playNextSong)
+
 export { audioPlayer, playSong, currentSong, playNextSong, playPreviousSong }
