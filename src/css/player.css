@@ -97,3 +97,33 @@
     }
   }
 }
+
+.standalone-play-button {
+  margin: 0;
+  margin-left: 1rem;
+  padding: .75rem;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  line-height: 0;
+  /* trick pour éviter le padding de texte fantôme... */
+  cursor: pointer;
+  transition: box-shadow var(--default-transition);
+
+  &:hover {
+    /* une jolie ombre bleue au survol */
+    box-shadow: 0 0 10px var(--primary-color-dark);
+
+    .material-icons {
+      /* bleu au survol */
+      color: var(--primary-color);
+    }
+  }
+
+  .material-icons {
+    font-size: 2rem;
+    line-height: 2rem;
+    color: #fff;
+    transition: color var(--default-transition);
+  }
+}

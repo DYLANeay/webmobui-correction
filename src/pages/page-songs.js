@@ -40,6 +40,7 @@ class PageSongsBase extends HTMLElement {
         // Itérer le tableau d'artistes reçus et créer les éléments correspondants
         songs.forEach((song) => {
           const songItem = document.createElement('song-item')
+          songItem.setAttribute('href', `#songs/${song.id}`)
           songItem.setAttribute('title', song.title)
           songItem.setAttribute('favorite', isFavorite(song))
           songItem.addEventListener('play_click', () => playSong(song, songs))

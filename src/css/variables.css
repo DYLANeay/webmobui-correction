@@ -18,3 +18,8 @@
   */
   --default-transition: 300ms ease-in-out;
 }
+
+body.offline {
+  --primary-color: #ff0404;
+  --primary-color-dark: #500000;
+}
