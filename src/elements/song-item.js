@@ -42,12 +42,14 @@ customElements.define('song-item', class extends HTMLElement {
     </a>`
 
     // Définition du custom event pour le bouton play
-    this.querySelector('.play-button').addEventListener('click', () => {
+    this.querySelector('.play-button').addEventListener('click', (e) => {
+      e.preventDefault()
       this.dispatchEvent(playClickEvent)
     })
 
     // Définition du custom event pour le bouton play
-    this.querySelector('.favorite-button').addEventListener('click', () => {
+    this.querySelector('.favorite-button').addEventListener('click', (e) => {
+      e.preventDefault()
       this.dispatchEvent(favoriteClickEvent)
     })
   }
