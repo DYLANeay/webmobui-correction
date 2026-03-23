@@ -8,6 +8,7 @@ import './pages/page-artists.js';
 import './pages/page-home.js';
 import './pages/page-player.js';
 import './pages/page-songs.js';
+import './pages/page-song-details.js';
 
 const router = () => {
 	const main = document.querySelector('main');
@@ -17,6 +18,8 @@ const router = () => {
 	else if (hashs[0] == '#player') main.innerHTML = '<page-player />';
 	else if (hashs[0] == '#search' && hashs[1])
 		main.innerHTML = `<page-search-songs query="${hashs[1]}" />`;
+	else if (hashs[0] == '#songs' && hashs[1])
+		main.innerHTML = `<page-song-details song-id="${hashs[1]}" />`;
 	else if (hashs[0] == '#artists' && hashs[1])
 		main.innerHTML = `<page-artist-songs artist-id="${hashs[1]}" />`;
 	else if (hashs[0] == '#artists' && !hashs[1])

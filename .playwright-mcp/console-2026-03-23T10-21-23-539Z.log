@@ -1,0 +1,7 @@
+[   45292ms] [ERROR] Error: Can only be used on: https://webmobui-correction.vercel.app
+    at https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.es6.js?v=160601:1:17700
+    at https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.es6.js?v=160601:1:17762
+    at async t.zr (https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.es6.js?v=160601:1:140050)
+    at async t.init (https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.es6.js?v=160601:1:140694)
+    at async http://localhost:5173/:35:5
+    at async https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.es6.js?v=160601:1:145303 @ https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.es6.js?v=160601:0
